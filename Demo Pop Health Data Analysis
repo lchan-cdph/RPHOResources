@@ -1,0 +1,52 @@
+Demographic Count Data Analysis with Non-parametric and stochastic methods 
+
+#Load necessary libraries 
+library(tidyverse) 
+library(coin) #for non-parametric tests 
+
+Demographic Count Data Analysis with Non-parametric and stochastic methods 
+
+Load and Inspect Data 
+# Load the dataset demographic_count_data <- read.csv("demographic_count_data.csv") 
+
+# Display the first few rows 
+head (demographic_count_data) 
+
+Data Cleaning 
+# Check for missing values 
+summary(demographic_count_data) 
+
+Exploratory Data Analysis 
+# Create a bar plot of demographic ratio count by city 
+ggplot(demographic_count_data, aes(x = City, y = Demographic_Count / 
+  (Demographic_Count + 
+Non_Demographic_Count))) +
+  geom_bar(stat = "identity", fill = "lightblue") + 
+labs(title = "Demographic Ratio Count by City", x = "City", y = "Demographic Ratio Count") 
+
+Non-parametric test for Differences in Ratios 
+# Perform a Wilcoxon rank-sum test for differences in ratios 
+wilcox_test(Demographic_Count / 
+(Demographic_Count + 
+Non_Demographic_Count) ~ City, data = 
+demographic_count_data) 
+
+Stochastic Modeling of Demographic Ratios 
+# Stochastic modeling using simulations 
+set.seed(123) # Set seed for reproducibility 
+simulated_ratios <- replicate(1000, { 
+sample(demographic_count_data$Demographic_Count / 
+(demographic_count_data$Demographic_Count + 
+demographic_count_data$Non_Demographic_Count), replace = TRUE)
+})
+
+# Plot the distribution of simulated ratios 
+hist(apply(simulated_ratios, 1, mean), 
+main = "Simulated Mean Demographic Ratios", xlab = Mean Demographic Ratio") 
+
+# Plot the heatmap 
+library(pheatmap)
+# Create a location-based heatmap of demographic ratio counts 
+ggplot(demographic_count_data, aes(x = Year, y = City, fill = Demographic_Count / (Demographic_Count + Non_Demographic_Count))) + 
+geom_tile() + scale_fill_gradient(low = "white", high = "blue") + 
+labs(title = Location-based Demographic Ratio Counts Heatmap", x = "Year", y = "City" 
